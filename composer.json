@@ -1,0 +1,23 @@
+{
+    "name": "fanamurov/larrock-reviews",
+    "description": "Reviews component for larrockCMS",
+    "type": "library",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Alexandr Fanamurov",
+            "email": "fanamurov@ya.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Larrock\\ComponentReviews\\": "src",
+            "Larrock\\ComponentReviews\\Models": "src/Models",
+            "Larrock\\ComponentReviews\\Requests": "src/Requests"
+        }
+    },
+    "require": {
+        "fanamurov/larrock-core": "^0.1",
+        "fanamurov/larrock-users": "^0.1"
+    }
+}
