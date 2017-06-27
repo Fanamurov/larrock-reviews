@@ -72,8 +72,7 @@ class ReviewsComponent extends Component
         $count = \Cache::remember('count-data-admin-'. $this->name, 1440, function(){
             return Reviews::count(['id']);
         });
-        $dropdown = Reviews::whereActive(1)->orderBy('position', 'desc')->get(['id', 'title', 'url']);
-        return view('larrock::admin.sectionmenu.types.dropdown', ['count' => $count, 'app' => $this, 'url' => '/admin/'. $this->name, 'dropdown' => $dropdown]);
+        return view('larrock::admin.sectionmenu.types.default', ['count' => $count, 'app' => $this, 'url' => '/admin/'. $this->name]);
     }
 
     public function createSitemap()
