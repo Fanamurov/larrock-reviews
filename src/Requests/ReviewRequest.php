@@ -2,7 +2,7 @@
 
 namespace Larrock\ComponentReviews\Requests;
 
-use App\Http\Requests\Request;
+use Larrock\Core\Requests\Request;
 
 class ReviewRequest extends Request
 {
