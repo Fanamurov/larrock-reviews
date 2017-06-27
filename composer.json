@@ -12,8 +12,8 @@
     "autoload": {
         "psr-4": {
             "Larrock\\ComponentReviews\\": "src",
-            "Larrock\\ComponentReviews\\Models": "src/Models",
-            "Larrock\\ComponentReviews\\Requests": "src/Requests"
+            "Larrock\\ComponentReviews\\Models\\": "src/Models",
+            "Larrock\\ComponentReviews\\Requests\\": "src/Requests"
         }
     },
     "require": {
