@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddForeignKeysToLarrockReviewsTable extends Migration {
+class AddForeignKeysToReviewsTable extends Migration {
 
     /**
      * Run the migrations.

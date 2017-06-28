@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateLarrockReviewsTable extends Migration {
+class CreateReviewsTable extends Migration {
 
 	/**
 	 * Run the migrations.
