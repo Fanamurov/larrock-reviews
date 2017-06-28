@@ -35,14 +35,12 @@ class LarrockComponentReviewsServiceProvider extends ServiceProvider
         $timestamp = date('Y_m_d_His', time());
         $migrations = [];
         if ( !class_exists('CreateReviewsTable')){
-            $migrations = [__DIR__.'/../database/migrations/0000_00_00_000000_create_reviews_table.php' => database_path('migrations/'.$timestamp.'_create_reviews_table.php')];
+            $migrations[__DIR__.'/../database/migrations/0000_00_00_000000_create_reviews_table.php'] = database_path('migrations/'.$timestamp.'_create_reviews_table.php');
         }
         if ( !class_exists('AddForeignKeysToReviewsTable')){
-            $migrations = [__DIR__.'/../database/migrations/0000_00_00_000000_add_foreign_keys_to_reviews_table.php' => database_path('migrations/'.$timestamp.'_add_foreign_keys_to_reviews_table.php')];
+            $migrations[__DIR__.'/../database/migrations/0000_00_00_000000_add_foreign_keys_to_reviews_table.php'] = database_path('migrations/'.$timestamp.'_add_foreign_keys_to_reviews_table.php');
         }
 
-        $this->publishes([
-            $migrations
-        ], 'migrations');
+        $this->publishes($migrations, 'migrations');
     }
 }
