@@ -29,23 +29,25 @@ class AdminReviewsController extends AdminController
         });
     }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function create()
-	{
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
         $test = Request::create('/admin/reviews', 'POST', [
-			'title' => 'Новый материал',
+            'title' => 'Новый материал',
             'url' => str_slug('novyy-material'),
             'active' => 0,
             'name' => 'Покупатель',
             'city' => 'Хабаровск',
             'contact' => 'без контакта',
+            'public_in_feed' => 1,
+            'user_id' => \Auth::user()->id
         ]);
         return $this->store($test);
-	}
+    }
 
     public function post(Request $request)
     {
