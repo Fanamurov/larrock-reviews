@@ -2,7 +2,7 @@
     "name": "fanamurov/larrock-reviews",
     "description": "Reviews component for larrockCMS",
     "type": "library",
-    "license": "BSD",
+    "license": "LGPL",
     "authors": [
         {
             "name": "Alexandr Fanamurov",

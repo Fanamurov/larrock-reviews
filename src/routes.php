@@ -13,6 +13,6 @@ Route::group(['middleware' => ['web', 'AddMenuFront', 'GetSeo', 'AddBlocksTempla
     ]);
 });
 
-Route::group(['prefix' => 'admin', 'middleware'=> ['web', 'level:2', 'LarrockAdminMenu']], function(){
+Route::group(['prefix' => 'admin', 'middleware'=> ['web', 'level:2', 'LarrockAdminMenu', 'SaveAdminPluginsData']], function(){
     Route::resource('reviews', AdminReviewsController::class);
 });
