@@ -3,7 +3,18 @@
 use Larrock\ComponentReviews\ReviewsController;
 use Larrock\ComponentReviews\AdminReviewsController;
 
-Route::group(['middleware' => ['web', 'AddMenuFront', 'GetSeo', 'AddBlocksTemplate']], function(){
+$middlewares = ['web', 'GetSeo'];
+if(file_exists(base_path(). '/vendor/fanamurov/larrock-menu')){
+    $middlewares[] = 'AddMenuFront';
+}
+if(file_exists(base_path(). '/vendor/fanamurov/larrock-blocks')){
+    $middlewares[] = 'AddBlocksTemplate';
+}
+if(file_exists(base_path(). '/vendor/fanamurov/larrock-discounts')){
+    $middlewares[] = 'DiscountsShare';
+}
+
+Route::group(['middleware' => $middlewares], function(){
     Route::post('/reviews/post', [
         'as' => 'reviews.post', 'uses' => ReviewsController::class .'@post'
     ]);
