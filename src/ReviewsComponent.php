@@ -3,7 +3,6 @@
 namespace Larrock\ComponentReviews;
 
 use Larrock\ComponentReviews\Models\Reviews;
-use Larrock\ComponentUsers\Models\User;
 use Larrock\Core\Component;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\Helpers\FormBuilder\FormDate;
@@ -12,6 +11,8 @@ use Larrock\Core\Helpers\FormBuilder\FormSelect;
 use Larrock\Core\Helpers\FormBuilder\FormSelectKey;
 use Larrock\Core\Helpers\FormBuilder\FormTags;
 use Larrock\Core\Helpers\FormBuilder\FormTextarea;
+use Larrock\ComponentReviews\Facades\LarrockReviews;
+use Larrock\ComponentUsers\Facades\LarrockUsers;
 
 class ReviewsComponent extends Component
 {
@@ -20,15 +21,14 @@ class ReviewsComponent extends Component
         $this->name = $this->table = 'reviews';
         $this->title = 'Отзывы';
         $this->description = 'Отзывы к материалам, каталогу, корзине и т.д.';
-        $this->model = Reviews::class;
+        $this->model = \config('larrock.models.reviews', Reviews::class);
         $this->active = TRUE;
         $this->addRows()->addActive()->isSearchable()->addPlugins();
     }
 
     protected function addPlugins()
     {
-        $this->addPluginImages()->addPluginFiles();
-        return $this;
+        return $this->addPluginImages()->addPluginFiles();
     }
 
     protected function addRows()
@@ -56,10 +56,10 @@ class ReviewsComponent extends Component
         $this->rows['date'] = $row->setTab('other', 'Дата, вес, активность');
 
         $row = new FormTags('user_id', 'ID посетителя на сайте');
-        $this->rows['user_id'] = $row->setConnect(User::class, 'get_user')->setMaxItems(1);
+        $this->rows['user_id'] = $row->setConnect(LarrockUsers::getModelName(), 'get_user')->setMaxItems(1);
 
         $row = new FormTags('answer_author', 'Кто отвечает');
-        $this->rows['answer_author'] = $row->setConnect(User::class, 'get_userAnswer')->setMaxItems(1);
+        $this->rows['answer_author'] = $row->setConnect(LarrockUsers::getModelName(), 'get_userAnswer')->setMaxItems(1);
 
         $row = new FormTextarea('answer', 'Ответ');
         $this->rows['answer'] = $row->setTypo()->setInTableAdmin();
@@ -69,14 +69,14 @@ class ReviewsComponent extends Component
 
     public function renderAdminMenu()
     {
-        $count = \Cache::remember('count-data-admin-'. $this->name, 1440, function(){
-            return Reviews::count(['id']);
+        $count = \Cache::remember('count-data-admin-'. LarrockReviews::getName(), 1440, function(){
+            return LarrockReviews::getModel()->count(['id']);
         });
-        return view('larrock::admin.sectionmenu.types.default', ['count' => $count, 'app' => $this, 'url' => '/admin/'. $this->name]);
+        return view('larrock::admin.sectionmenu.types.default', ['count' => $count, 'app' => LarrockReviews::getConfig(), 'url' => '/admin/'. LarrockReviews::getName()]);
     }
 
     public function createSitemap()
     {
-        //return Reviews::whereActive(1)->get();
+        //return LarrockReviews::getModel()->whereActive(1)->get();
     }
 }

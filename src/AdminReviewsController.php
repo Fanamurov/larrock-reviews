@@ -15,17 +15,17 @@ use Mail;
 use Redirect;
 use Validator;
 use View;
+use Larrock\ComponentReviews\Facades\LarrockReviews;
 
 class AdminReviewsController extends AdminController
 {
     public function __construct()
     {
-        $component = new ReviewsComponent();
-        $this->config = $component->shareConfig();
+        LarrockReviews::shareConfig();
 
         Breadcrumbs::setView('larrock::admin.breadcrumb.breadcrumb');
-        Breadcrumbs::register('admin.'. $this->config->name .'.index', function($breadcrumbs){
-            $breadcrumbs->push($this->config->title, '/admin/'. $this->config->name);
+        Breadcrumbs::register('admin.'. LarrockReviews::getName() .'.index', function($breadcrumbs){
+            $breadcrumbs->push(LarrockReviews::getTitle(), '/admin/'. LarrockReviews::getName());
         });
     }
 
@@ -61,8 +61,7 @@ class AdminReviewsController extends AdminController
             return back()->withInput($request->except('password'))->withErrors($validator);
         }
 
-        $reviews = new Reviews();
-        $reviews->fill($request->all());
+        $reviews = LarrockReviews::getModel()->fill($request->all());
         if($reviews->save()){
             Alert::add('success', 'Ваш комментарий успешно отправлен, после модерации от будет опубликован')->flash();
 

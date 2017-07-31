@@ -2,8 +2,8 @@
 
 namespace Larrock\ComponentReviews\Models;
 
-use Larrock\ComponentReviews\ReviewsComponent;
-use Larrock\ComponentUsers\Models\User;
+use Larrock\ComponentReviews\Facades\LarrockReviews;
+use Larrock\ComponentUsers\Facades\LarrockUsers;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
@@ -82,22 +82,20 @@ class Reviews extends Model implements HasMediaConversions
 
     public function getImages()
     {
-        $config = new ReviewsComponent();
-        return $this->hasMany('Spatie\MediaLibrary\Media', 'model_id', 'id')->where('model_type', '=', $config->model)->orderBy('order_column', 'DESC');
+        return $this->hasMany('Spatie\MediaLibrary\Media', 'model_id', 'id')->where('model_type', '=', LarrockReviews::getModelName())->orderBy('order_column', 'DESC');
     }
     public function getFirstImage()
     {
-        $config = new ReviewsComponent();
-        return $this->hasOne('Spatie\MediaLibrary\Media', 'model_id', 'id')->where('model_type', '=', $config->model)->orderBy('order_column', 'DESC');
+        return $this->hasOne('Spatie\MediaLibrary\Media', 'model_id', 'id')->where('model_type', '=', LarrockReviews::getModelName())->orderBy('order_column', 'DESC');
     }
 
     public function get_user()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(LarrockUsers::getModelName(), 'id', 'user_id');
     }
 
     public function get_userAnswer()
     {
-        return $this->hasOne(User::class, 'id', 'answer_author');
+        return $this->hasOne(LarrockUsers::getModelName(), 'id', 'answer_author');
     }
 }

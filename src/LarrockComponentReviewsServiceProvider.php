@@ -29,7 +29,10 @@ class LarrockComponentReviewsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->make(ReviewsComponent::class);
+        $this->app->singleton('larrockreviews', function() {
+            $class = config('larrock.components.reviews', ReviewsComponent::class);
+            return new $class;
+        });
         $this->app->make(ReviewRequest::class);
 
         $timestamp = date('Y_m_d_His', time());
