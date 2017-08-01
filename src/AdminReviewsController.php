@@ -21,7 +21,7 @@ class AdminReviewsController extends AdminController
 {
     public function __construct()
     {
-        LarrockReviews::shareConfig();
+        $this->config = LarrockReviews::shareConfig();
 
         Breadcrumbs::setView('larrock::admin.breadcrumb.breadcrumb');
         Breadcrumbs::register('admin.'. LarrockReviews::getName() .'.index', function($breadcrumbs){
