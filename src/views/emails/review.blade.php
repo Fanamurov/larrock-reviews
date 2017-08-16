@@ -1,4 +1,4 @@
-<h1 style="font:26px/32px Calibri,Helvetica,Arial,sans-serif;">Отправлен комментарий</h1>
+<h1 style="font:26px/32px Calibri,Helvetica,Arial,sans-serif;">Отправлен отзыв</h1>
 <p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Имя:</strong> {{ $name }}</p>
 <p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Город:</strong> {{ $city }}</p>
 <p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Контакты:</strong> {{ $contact }}</p>
