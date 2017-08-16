@@ -71,7 +71,7 @@ class Reviews extends Model implements HasMediaConversions
 
     public function getAnswerAuthorInfoAttribute()
     {
-        if( !empty($this->answer_author) && $get_user = User::whereId($this->answer_author)->first()){
+        if( !empty($this->answer_author) && $get_user = LarrockUsers::getModel()->whereId($this->answer_author)->first()){
             if( !empty($get_user->fio)){
                 return $get_user->fio .' ('. env('SITE_NAME', 'администрация сайта') .')';
             }

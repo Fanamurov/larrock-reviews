@@ -34,7 +34,7 @@ class AdminReviewsController extends AdminController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $test = Request::create('/admin/reviews', 'POST', [
             'title' => 'Новый материал',

@@ -3,6 +3,7 @@
 namespace Larrock\ComponentReviews;
 
 use Larrock\ComponentReviews\Models\Reviews;
+use Larrock\ComponentUsers\Models\User;
 use Larrock\Core\Component;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\Helpers\FormBuilder\FormDate;
@@ -22,7 +23,6 @@ class ReviewsComponent extends Component
         $this->title = 'Отзывы';
         $this->description = 'Отзывы к материалам, каталогу, корзине и т.д.';
         $this->model = \config('larrock.models.reviews', Reviews::class);
-        $this->active = TRUE;
         $this->addRows()->addActive()->isSearchable()->addPlugins();
     }
 
@@ -33,6 +33,7 @@ class ReviewsComponent extends Component
 
     protected function addRows()
     {
+        //TODO: Переписать использование модели User на факад компонента (возникает ошибка facade root)
         $row = new FormInput('name', 'Имя комментатора');
         $this->rows['name'] = $row->setValid('max:255|required')->setInTableAdmin();
 
@@ -56,10 +57,10 @@ class ReviewsComponent extends Component
         $this->rows['date'] = $row->setTab('other', 'Дата, вес, активность');
 
         $row = new FormTags('user_id', 'ID посетителя на сайте');
-        $this->rows['user_id'] = $row->setConnect(LarrockUsers::getModelName(), 'get_user')->setMaxItems(1);
+        $this->rows['user_id'] = $row->setConnect(User::class, 'get_user')->setMaxItems(1);
 
         $row = new FormTags('answer_author', 'Кто отвечает');
-        $this->rows['answer_author'] = $row->setConnect(LarrockUsers::getModelName(), 'get_userAnswer')->setMaxItems(1);
+        $this->rows['answer_author'] = $row->setConnect(User::class, 'get_userAnswer')->setMaxItems(1);
 
         $row = new FormTextarea('answer', 'Ответ');
         $this->rows['answer'] = $row->setTypo()->setInTableAdmin();
