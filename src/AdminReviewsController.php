@@ -23,7 +23,7 @@ class AdminReviewsController extends AdminController
     {
         $this->config = LarrockReviews::shareConfig();
 
-        Breadcrumbs::setView('larrock::admin.breadcrumb.breadcrumb');
+        \Config::set('breadcrumbs.view', 'larrock::admin.breadcrumb.breadcrumb');
         Breadcrumbs::register('admin.'. LarrockReviews::getName() .'.index', function($breadcrumbs){
             $breadcrumbs->push(LarrockReviews::getTitle(), '/admin/'. LarrockReviews::getName());
         });
