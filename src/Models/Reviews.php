@@ -6,9 +6,9 @@ use Larrock\ComponentReviews\Facades\LarrockReviews;
 use Larrock\ComponentUsers\Facades\LarrockUsers;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Spatie\MediaLibrary\Media;
 
 class Reviews extends Model implements HasMediaConversions
 {
@@ -22,14 +22,14 @@ class Reviews extends Model implements HasMediaConversions
 
     use HasMediaTrait;
 
-    public function registerMediaConversions()
+    public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('110x110')
-            ->setManipulations(['w' => 110, 'h' => 110])
+            ->height(110)->width(110)
             ->performOnCollections('images');
 
         $this->addMediaConversion('140x140')
-            ->setManipulations(['w' => 140, 'h' => 140])
+            ->height(140)->width(140)
             ->performOnCollections('images');
     }
 
