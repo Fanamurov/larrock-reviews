@@ -15,7 +15,9 @@ class ReviewsController extends Controller
     public function index()
     {
         $data['list'] = LarrockReviews::getModel()->wherePublicInFeed(1)->whereActive(1)->orderBy('date', 'DESC')->paginate(10);
-        $data['moderate'] = LarrockReviews::getModel()->wherePublicInFeed(1)->whereActive(0)->orderBy('date', 'DESC')->get();
+        if(Auth::user()){
+            $data['moderate'] = LarrockReviews::getModel()->wherePublicInFeed(1)->whereUserId(Auth::user()->id)->whereActive(0)->orderBy('date', 'DESC')->get();
+        }
         return view('larrock::front.reviews.list', $data);
     }
 
@@ -37,16 +39,14 @@ class ReviewsController extends Controller
         if($comment->save()){
             Alert::add('success', 'Ваш отзыв успешно отправлен, после модерации от будет опубликован')->flash();
 
-            $mails = collect(array_map('trim', explode(',', env('MAIL_TO_ADMIN', 'robot@martds.ru'))));
+            $mails = array_map('trim', explode(',', env('MAIL_TO_ADMIN', 'robot@martds.ru')));
             $send_data = $request->all();
             /** @noinspection PhpVoidFunctionResultUsedInspection */
             Mail::send('larrock::emails.review', $send_data,
                 function($message) use ($mails){
                     $message->from('no-reply@'. array_get($_SERVER, 'HTTP_HOST'), env('MAIL_TO_ADMIN_NAME', 'ROBOT'));
-                    foreach($mails as $value){
-                        $message->to($value);
-                    }
-                    $message->subject('Отправлен отзыв '. array_get($_SERVER, 'HTTP_HOST')
+                    $message->to($mails);
+                    $message->subject('Отправлен отзыв '. env('SITE_NAME')
                     );
                 });
         }else{

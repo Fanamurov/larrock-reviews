@@ -4,6 +4,7 @@ namespace Larrock\ComponentReviews;
 
 use Larrock\ComponentReviews\Requests\ReviewRequest;
 use Illuminate\Support\ServiceProvider;
+use Larrock\ComponentReviews\Middleware\ReviewsMiddleware;
 
 class LarrockComponentReviewsServiceProvider extends ServiceProvider
 {
@@ -46,5 +47,7 @@ class LarrockComponentReviewsServiceProvider extends ServiceProvider
         }
 
         $this->publishes($migrations, 'migrations');
+
+        $this->app['router']->aliasMiddleware('ReviewsMiddleware', ReviewsMiddleware::class);
     }
 }
