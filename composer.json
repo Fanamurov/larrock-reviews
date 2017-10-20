@@ -17,8 +17,8 @@
         }
     },
     "require": {
-        "fanamurov/larrock-core": "^0.2",
-        "fanamurov/larrock-users": "^0.2"
+        "fanamurov/larrock-core": "^0.3",
+        "fanamurov/larrock-users": "^0.3"
     },
     "extra": {
         "laravel": {

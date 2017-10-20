@@ -3,11 +3,11 @@
 namespace Larrock\ComponentReviews;
 
 use App\Http\Controllers\Controller;
-use Larrock\ComponentReviews\Models\Reviews;
+use Auth;
 use Larrock\ComponentReviews\Facades\LarrockReviews;
+use Session;
 use Validator;
 use Illuminate\Http\Request;
-use Alert;
 use Mail;
 
 class ReviewsController extends Controller
@@ -37,7 +37,7 @@ class ReviewsController extends Controller
         $comment->date = date('Y-m-d H:s:i');
         $comment->active = 0;
         if($comment->save()){
-            Alert::add('success', 'Ваш отзыв успешно отправлен, после модерации от будет опубликован')->flash();
+            Session::push('message.success', 'Ваш отзыв успешно отправлен, после модерации от будет опубликован');
 
             $mails = array_map('trim', explode(',', env('MAIL_TO_ADMIN', 'robot@martds.ru')));
             $send_data = $request->all();
@@ -50,7 +50,7 @@ class ReviewsController extends Controller
                     );
                 });
         }else{
-            Alert::add('danger', 'Отзыв не удалось сохранить')->flash();
+            Session::push('message.danger', 'Отзыв не удалось сохранить');
         }
 
         return back()->withInput();

@@ -2,19 +2,12 @@
 
 namespace Larrock\ComponentReviews;
 
-use Alert;
 use Breadcrumbs;
 use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
-use JsValidator;
-use Larrock\ComponentReviews\Models\Reviews;
 use Larrock\Core\AdminController;
-use Larrock\Core\Component;
 use Mail;
-use Redirect;
+use Session;
 use Validator;
-use View;
 use Larrock\ComponentReviews\Facades\LarrockReviews;
 
 class AdminReviewsController extends AdminController
@@ -32,6 +25,7 @@ class AdminReviewsController extends AdminController
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -63,7 +57,7 @@ class AdminReviewsController extends AdminController
 
         $reviews = LarrockReviews::getModel()->fill($request->all());
         if($reviews->save()){
-            Alert::add('success', 'Ваш комментарий успешно отправлен, после модерации от будет опубликован')->flash();
+            Session::push('message.success', 'Ваш комментарий успешно отправлен, после модерации от будет опубликован');
 
             $mails = collect(array_map('trim', explode(',', env('MAIL_TO_ADMIN', 'robot@martds.ru'))));
             $send_data = $request->all();
@@ -79,10 +73,8 @@ class AdminReviewsController extends AdminController
                     );
                 });
         }else{
-            Alert::add('danger', 'Комментарий не удалось сохранить')->flash();
+            Session::push('message.danger', 'Комментарий не удалось сохранить');
         }
-
-        //FormsLog::create(['formname' => 'comment', 'params' => $request->all(), 'status' => 'Новое']);
 
         return back()->withInput();
     }
