@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Nicolaslopezj\Searchable\SearchableTrait;
-use Spatie\MediaLibrary\Media;
+use Larrock\Core\Traits\GetFilesAndImages;
 
 class Reviews extends Model implements HasMediaConversions
 {
     use SearchableTrait;
+    use GetFilesAndImages;
+    use HasMediaTrait;
 
     protected $searchable = [
         'columns' => [
@@ -20,17 +22,11 @@ class Reviews extends Model implements HasMediaConversions
         ]
     ];
 
-    use HasMediaTrait;
-
-    public function registerMediaConversions(Media $media = null)
+    public function __construct(array $attributes = [])
     {
-        $this->addMediaConversion('110x110')
-            ->height(110)->width(110)
-            ->performOnCollections('images');
-
-        $this->addMediaConversion('140x140')
-            ->height(140)->width(140)
-            ->performOnCollections('images');
+        parent::__construct($attributes);
+        $this->modelName = LarrockReviews::getModelName();
+        $this->componentName = 'reviews';
     }
 
     protected $table = 'reviews';
@@ -78,15 +74,6 @@ class Reviews extends Model implements HasMediaConversions
             return $get_user->first_name .' '. $get_user->last_name .' ('. env('SITE_NAME', 'администрация сайта') .')';
         }
         return 'Аноним';
-    }
-
-    public function getImages()
-    {
-        return $this->hasMany('Spatie\MediaLibrary\Media', 'model_id', 'id')->where('model_type', '=', LarrockReviews::getModelName())->orderBy('order_column', 'DESC');
-    }
-    public function getFirstImage()
-    {
-        return $this->hasOne('Spatie\MediaLibrary\Media', 'model_id', 'id')->where('model_type', '=', LarrockReviews::getModelName())->orderBy('order_column', 'DESC');
     }
 
     public function get_user()
