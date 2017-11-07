@@ -26,7 +26,6 @@ class Reviews extends Model implements HasMediaConversions
     {
         parent::__construct($attributes);
         $this->modelName = LarrockReviews::getModelName();
-        $this->componentName = 'reviews';
     }
 
     protected $table = 'reviews';
