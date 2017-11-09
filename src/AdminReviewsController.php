@@ -4,14 +4,21 @@ namespace Larrock\ComponentReviews;
 
 use Breadcrumbs;
 use Illuminate\Http\Request;
-use Larrock\Core\AdminController;
+use Illuminate\Routing\Controller;
+use Larrock\Core\Traits\AdminMethodsDestroy;
+use Larrock\Core\Traits\AdminMethodsEdit;
+use Larrock\Core\Traits\AdminMethodsIndex;
+use Larrock\Core\Traits\AdminMethodsStore;
+use Larrock\Core\Traits\AdminMethodsUpdate;
 use Mail;
 use Session;
 use Validator;
 use Larrock\ComponentReviews\Facades\LarrockReviews;
 
-class AdminReviewsController extends AdminController
+class AdminReviewsController extends Controller
 {
+    use AdminMethodsStore, AdminMethodsDestroy, AdminMethodsUpdate, AdminMethodsIndex, AdminMethodsEdit;
+
     public function __construct()
     {
         $this->config = LarrockReviews::shareConfig();
