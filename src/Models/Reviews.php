@@ -5,6 +5,7 @@ namespace Larrock\ComponentReviews\Models;
 use Larrock\ComponentReviews\Facades\LarrockReviews;
 use Larrock\ComponentUsers\Facades\LarrockUsers;
 use Illuminate\Database\Eloquent\Model;
+use Larrock\Core\Component;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -12,6 +13,11 @@ use Larrock\Core\Traits\GetFilesAndImages;
 
 class Reviews extends Model implements HasMediaConversions
 {
+    /**
+     * @var $this Component
+     */
+    public $config;
+
     use SearchableTrait;
     use GetFilesAndImages;
     use HasMediaTrait;
@@ -25,7 +31,7 @@ class Reviews extends Model implements HasMediaConversions
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->modelName = LarrockReviews::getModelName();
+        $this->config = LarrockReviews::getConfig();
     }
 
     protected $table = 'reviews';
