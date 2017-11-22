@@ -12,6 +12,11 @@ use Mail;
 
 class ReviewsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(LarrockReviews::combineFrontMiddlewares());
+    }
+
     public function index()
     {
         $data['list'] = LarrockReviews::getModel()->wherePublicInFeed(1)->whereActive(1)->orderBy('date', 'DESC')->paginate(10);
