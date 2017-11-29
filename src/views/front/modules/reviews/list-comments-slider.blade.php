@@ -10,7 +10,7 @@
             @endphp
             <p class="uk-h2 uk-text-center">Уже <i>{{ $counter }}</i> довольных клиентов<br/>были обслужены нами</p>
             <div>
-                <div class="uk-slidenav-position" data-uk-slideset="{default: 1; autoplay: true}">
+                <div class="uk-slidenav-position" data-uk-slideset="{default: 1, autoplay: 'true', autoplayInterval: '6000'}">
                     <ul class="uk-grid uk-slideset uk-push-1-10 uk-width-8-10 uk-width-small-8-10 uk-width-medium-8-10" id="reviews-grid">
                         @foreach($reviews as $item)
                             <li>
