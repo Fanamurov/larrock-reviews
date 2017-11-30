@@ -33,37 +33,51 @@ class ReviewsComponent extends Component
 
     protected function addRows()
     {
-        //TODO: Переписать использование модели User на факад компонента (возникает ошибка facade root)
         $row = new FormInput('name', 'Имя комментатора');
-        $this->rows['name'] = $row->setValid('max:255|required')->setInTableAdmin();
+        $this->rows['name'] = $row->setValid('max:255|required')->setInTableAdmin()->setFillable();
 
         $row = new FormInput('city', 'Город комментатора');
-        $this->rows['city'] = $row->setValid('max:255');
+        $this->rows['city'] = $row->setValid('max:255')->setFillable();
 
         $row = new FormInput('contact', 'Контакты');
-        $this->rows['contact'] = $row->setValid('max:255');
+        $this->rows['contact'] = $row->setValid('max:255')->setFillable();
 
         $row = new FormTextarea('comment', 'Комментарий');
-        $this->rows['description'] = $row->setTypo()->setValid('required')->setInTableAdmin();
+        $this->rows['description'] = $row->setTypo()->setValid('required')->setInTableAdmin()->setFillable();
 
         $row = new FormSelectKey('rating', 'Оценка');
         $this->rows['rating'] = $row->setOptions(['5' => '★★★★★ Рекомендую', '4' => '★★★★ Хорошо',
-            '3' => '★★★ Удовлетворительно', '2' => '★★ Не рекомендую', '1' => '★ Ужасно'])->setValid('required')->setInTableAdmin();
+            '3' => '★★★ Удовлетворительно', '2' => '★★ Не рекомендую', '1' => '★ Ужасно'])
+            ->setValid('required')->setInTableAdmin()->setFillable()
+            ->setCssClassGroup('uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-4');
 
         $row = new FormCheckbox('public_in_feed', 'Опубликован на странице Отзывы');
-        $this->rows['public_in_feed'] = $row->setDefaultValue(0);
+        $this->rows['public_in_feed'] = $row->setDefaultValue(0)->setFillable()
+            ->setCssClassGroup('uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-4');
 
         $row = new FormDate('date', 'Дата комментария');
-        $this->rows['date'] = $row->setTab('other', 'Дата, вес, активность');
+        $this->rows['date'] = $row->setTab('other', 'Дата, вес, активность')->setFillable()
+            ->setCssClassGroup('uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-4');
 
         $row = new FormTags('user_id', 'ID посетителя на сайте');
-        $this->rows['user_id'] = $row->setConnect(User::class, 'get_user')->setMaxItems(1);
+        $this->rows['user_id'] = $row->setConnect(User::class, 'get_user')
+            ->setMaxItems(1)->setFillable()->setCssClassGroup('uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-4');
 
         $row = new FormTags('answer_author', 'Кто отвечает');
-        $this->rows['answer_author'] = $row->setConnect(User::class, 'get_userAnswer')->setMaxItems(1);
+        $this->rows['answer_author'] = $row->setConnect(User::class, 'get_userAnswer')
+            ->setMaxItems(1)->setFillable();
 
         $row = new FormTextarea('answer', 'Ответ');
         $this->rows['answer'] = $row->setTypo()->setInTableAdmin();
+
+        $row = new FormInput('link_name', 'link_name');
+        $this->rows['link_name'] = $row->setCssClassGroup('uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-4')->setFillable();
+
+        $row = new FormInput('link_id', 'link_id');
+        $this->rows['link_id'] = $row->setCssClassGroup('uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-4')->setFillable();
+
+        $row = new FormInput('url_post', 'url_post');
+        $this->rows['url_post'] = $row->setCssClassGroup('uk-width-1-2 uk-width-medium-1-3 uk-width-large-1-4')->setFillable();
 
         return $this;
     }

@@ -30,6 +30,8 @@ class CreateReviewsTable extends Migration {
 			$table->integer('public_in_feed')->nullable();
             $table->dateTime('date')->nullable();
 			$table->timestamps();
+
+            $table->index(['user_id', 'active']);
 		});
 	}
 

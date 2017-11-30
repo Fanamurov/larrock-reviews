@@ -6,6 +6,7 @@ use Larrock\ComponentReviews\Facades\LarrockReviews;
 use Larrock\ComponentUsers\Facades\LarrockUsers;
 use Illuminate\Database\Eloquent\Model;
 use Larrock\Core\Component;
+use Larrock\Core\Traits\GetLink;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -21,6 +22,7 @@ class Reviews extends Model implements HasMediaConversions
     use SearchableTrait;
     use GetFilesAndImages;
     use HasMediaTrait;
+    use GetLink;
 
     protected $searchable = [
         'columns' => [
@@ -31,13 +33,10 @@ class Reviews extends Model implements HasMediaConversions
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
+        $this->fillable(LarrockReviews::addFillableUserRows([]));
         $this->config = LarrockReviews::getConfig();
+        $this->table = LarrockReviews::getTable();
     }
-
-    protected $table = 'reviews';
-
-    protected $fillable = ['user_id', 'name', 'link_name', 'link_id', 'city', 'comment', 'answer',
-        'answer_author', 'rating', 'active', 'contact', 'url_post', 'public_in_feed', 'date'];
 
     protected $casts = [
         'active' => 'integer',
