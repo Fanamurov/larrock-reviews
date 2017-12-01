@@ -2,7 +2,6 @@
 
 namespace Larrock\ComponentReviews;
 
-use Breadcrumbs;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Larrock\Core\Traits\AdminMethodsDestroy;
@@ -21,12 +20,9 @@ class AdminReviewsController extends Controller
 
     public function __construct()
     {
+        $this->middleware(LarrockReviews::combineAdminMiddlewares());
         $this->config = LarrockReviews::shareConfig();
-
         \Config::set('breadcrumbs.view', 'larrock::admin.breadcrumb.breadcrumb');
-        Breadcrumbs::register('admin.'. LarrockReviews::getName() .'.index', function($breadcrumbs){
-            $breadcrumbs->push(LarrockReviews::getTitle(), '/admin/'. LarrockReviews::getName());
-        });
     }
 
     /**
