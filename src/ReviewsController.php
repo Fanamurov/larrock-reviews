@@ -23,7 +23,7 @@ class ReviewsController extends Controller
         if(Auth::user()){
             $data['moderate'] = LarrockReviews::getModel()->wherePublicInFeed(1)->whereUserId(Auth::user()->id)->whereActive(0)->orderBy('date', 'DESC')->get();
         }
-        return view('larrock::front.reviews.list', $data);
+        return view(config('larrock.views.reviews.index', 'larrock::front.reviews.list'), $data);
     }
 
     public function post(Request $request)
