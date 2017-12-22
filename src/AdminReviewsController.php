@@ -9,6 +9,7 @@ use Larrock\Core\Traits\AdminMethodsEdit;
 use Larrock\Core\Traits\AdminMethodsIndex;
 use Larrock\Core\Traits\AdminMethodsStore;
 use Larrock\Core\Traits\AdminMethodsUpdate;
+use Larrock\Core\Traits\ShareMethods;
 use Mail;
 use Session;
 use Validator;
@@ -16,10 +17,11 @@ use Larrock\ComponentReviews\Facades\LarrockReviews;
 
 class AdminReviewsController extends Controller
 {
-    use AdminMethodsStore, AdminMethodsDestroy, AdminMethodsUpdate, AdminMethodsIndex, AdminMethodsEdit;
+    use AdminMethodsStore, AdminMethodsDestroy, AdminMethodsUpdate, AdminMethodsIndex, AdminMethodsEdit, ShareMethods;
 
     public function __construct()
     {
+        $this->shareMethods();
         $this->middleware(LarrockReviews::combineAdminMiddlewares());
         $this->config = LarrockReviews::shareConfig();
         \Config::set('breadcrumbs.view', 'larrock::admin.breadcrumb.breadcrumb');
