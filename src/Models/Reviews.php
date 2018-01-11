@@ -49,6 +49,11 @@ class Reviews extends Model implements HasMediaConversions
         'answer_author_info'
     ];
 
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
     public function getUserRatingAttribute()
     {
         if($this->rating === 5){
