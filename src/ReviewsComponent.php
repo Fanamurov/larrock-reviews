@@ -43,7 +43,7 @@ class ReviewsComponent extends Component
         $this->rows['contact'] = $row->setValid('max:255')->setFillable();
 
         $row = new FormTextarea('comment', 'Комментарий');
-        $this->rows['description'] = $row->setTypo()->setValid('required')->setInTableAdmin()->setFillable();
+        $this->rows['comment'] = $row->setTypo()->setValid('required')->setInTableAdmin()->setFillable();
 
         $row = new FormSelectKey('rating', 'Оценка');
         $this->rows['rating'] = $row->setOptions(['5' => '★★★★★ Рекомендую', '4' => '★★★★ Хорошо',
