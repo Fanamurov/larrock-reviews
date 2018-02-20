@@ -12,11 +12,15 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Larrock\Core\Traits\GetFilesAndImages;
 
+/**
+ * @property string $answer_author_info
+ * @property mixed|string $user_rating
+ * @property mixed $get_user
+ * @property mixed $get_user_answer
+ */
 class Reviews extends Model implements HasMediaConversions
 {
-    /**
-     * @var $this Component
-     */
+    /** @var $this Component */
     protected $config;
 
     use SearchableTrait;

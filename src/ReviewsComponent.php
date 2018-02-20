@@ -2,18 +2,17 @@
 
 namespace Larrock\ComponentReviews;
 
+use Cache;
 use Larrock\ComponentReviews\Models\Reviews;
 use Larrock\ComponentUsers\Models\User;
 use Larrock\Core\Component;
 use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
 use Larrock\Core\Helpers\FormBuilder\FormDate;
 use Larrock\Core\Helpers\FormBuilder\FormInput;
-use Larrock\Core\Helpers\FormBuilder\FormSelect;
 use Larrock\Core\Helpers\FormBuilder\FormSelectKey;
 use Larrock\Core\Helpers\FormBuilder\FormTags;
 use Larrock\Core\Helpers\FormBuilder\FormTextarea;
 use Larrock\ComponentReviews\Facades\LarrockReviews;
-use Larrock\ComponentUsers\Facades\LarrockUsers;
 
 class ReviewsComponent extends Component
 {
@@ -84,14 +83,9 @@ class ReviewsComponent extends Component
 
     public function renderAdminMenu()
     {
-        $count = \Cache::remember('count-data-admin-'. LarrockReviews::getName(), 1440, function(){
+        $count = Cache::rememberForever('count-data-admin-'. LarrockReviews::getName(), function(){
             return LarrockReviews::getModel()->count(['id']);
         });
         return view('larrock::admin.sectionmenu.types.default', ['count' => $count, 'app' => LarrockReviews::getConfig(), 'url' => '/admin/'. LarrockReviews::getName()]);
-    }
-
-    public function createSitemap()
-    {
-        //return LarrockReviews::getModel()->whereActive(1)->get();
     }
 }

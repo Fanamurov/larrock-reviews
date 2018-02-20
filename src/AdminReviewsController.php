@@ -10,9 +10,6 @@ use Larrock\Core\Traits\AdminMethodsIndex;
 use Larrock\Core\Traits\AdminMethodsStore;
 use Larrock\Core\Traits\AdminMethodsUpdate;
 use Larrock\Core\Traits\ShareMethods;
-use Mail;
-use Session;
-use Validator;
 use Larrock\ComponentReviews\Facades\LarrockReviews;
 
 class AdminReviewsController extends Controller
@@ -46,41 +43,5 @@ class AdminReviewsController extends Controller
             'user_id' => \Auth::user()->id
         ]);
         return $this->store($test);
-    }
-
-    public function post(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-            'city' => 'max:255',
-            'rating' => 'required',
-            'comment' => 'required',
-        ]);
-        if($validator->fails()){
-            return back()->withInput($request->except('password'))->withErrors($validator);
-        }
-
-        $reviews = LarrockReviews::getModel()->fill($request->all());
-        if($reviews->save()){
-            Session::push('message.success', 'Ваш комментарий успешно отправлен, после модерации от будет опубликован');
-
-            $mails = collect(array_map('trim', explode(',', env('MAIL_TO_ADMIN', 'robot@martds.ru'))));
-            $send_data = $request->all();
-            /** @noinspection PhpVoidFunctionResultUsedInspection */
-            Mail::send('larrock::emails.review-to-admin',
-                $send_data,
-                function($message) use ($mails){
-                    $message->from('no-reply@'. array_get($_SERVER, 'HTTP_HOST'), env('MAIL_TO_ADMIN_NAME', 'ROBOT'));
-                    foreach($mails as $value){
-                        $message->to($value);
-                    }
-                    $message->subject('Отправлен комментарий '. array_get($_SERVER, 'HTTP_HOST')
-                    );
-                });
-        }else{
-            Session::push('message.danger', 'Комментарий не удалось сохранить');
-        }
-
-        return back()->withInput();
     }
 }
