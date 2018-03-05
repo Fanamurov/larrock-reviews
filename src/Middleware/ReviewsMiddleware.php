@@ -4,7 +4,7 @@ namespace Larrock\ComponentReviews\Middleware;
 
 use Cache;
 use Closure;
-use Larrock\ComponentReviews\Facades\LarrockReviews;
+use LarrockReviews;
 
 class ReviewsMiddleware
 {

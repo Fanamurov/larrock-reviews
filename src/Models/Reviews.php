@@ -2,8 +2,8 @@
 
 namespace Larrock\ComponentReviews\Models;
 
-use Larrock\ComponentReviews\Facades\LarrockReviews;
-use Larrock\ComponentUsers\Facades\LarrockUsers;
+use LarrockReviews;
+use LarrockUsers;
 use Illuminate\Database\Eloquent\Model;
 use Larrock\Core\Component;
 use Larrock\Core\Traits\GetLink;

@@ -10,7 +10,7 @@ use Larrock\Core\Traits\AdminMethodsIndex;
 use Larrock\Core\Traits\AdminMethodsStore;
 use Larrock\Core\Traits\AdminMethodsUpdate;
 use Larrock\Core\Traits\ShareMethods;
-use Larrock\ComponentReviews\Facades\LarrockReviews;
+use LarrockReviews;
 
 class AdminReviewsController extends Controller
 {

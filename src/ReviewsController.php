@@ -4,7 +4,7 @@ namespace Larrock\ComponentReviews;
 
 use App\Http\Controllers\Controller;
 use Auth;
-use Larrock\ComponentReviews\Facades\LarrockReviews;
+use LarrockReviews;
 use Session;
 use Validator;
 use Illuminate\Http\Request;
