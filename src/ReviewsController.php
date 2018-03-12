@@ -44,7 +44,7 @@ class ReviewsController extends Controller
         if($comment->save()){
             Session::push('message.success', 'Ваш отзыв успешно отправлен, после модерации от будет опубликован');
 
-            $mails = array_map('trim', explode(',', env('MAIL_TO_ADMIN', 'robot@martds.ru')));
+            $mails = array_map('trim', explode(',', env('MAIL_TO_ADMIN')));
             $send_data = $request->all();
             /** @noinspection PhpVoidFunctionResultUsedInspection */
             Mail::send('larrock::emails.review', $send_data,

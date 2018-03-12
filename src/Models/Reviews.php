@@ -17,6 +17,9 @@ use Larrock\Core\Traits\GetFilesAndImages;
  * @property mixed|string $user_rating
  * @property mixed $get_user
  * @property mixed $get_user_answer
+ * @property int $public_in_feed
+ * @property int $active
+ * @property int $rating
  */
 class Reviews extends Model implements HasMediaConversions
 {
@@ -89,12 +92,12 @@ class Reviews extends Model implements HasMediaConversions
         return 'Аноним';
     }
 
-    public function get_user()
+    public function getUser()
     {
         return $this->hasOne(LarrockUsers::getModelName(), 'id', 'user_id');
     }
 
-    public function get_userAnswer()
+    public function getUserAnswer()
     {
         return $this->hasOne(LarrockUsers::getModelName(), 'id', 'answer_author');
     }
