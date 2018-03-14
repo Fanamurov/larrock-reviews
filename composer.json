@@ -16,9 +16,6 @@
             "Larrock\\ComponentReviews\\Requests\\": "src/Requests"
         }
     },
-    "require": {
-        "fanamurov/larrock-core": "^1.0"
-    },
     "extra": {
         "laravel": {
             "providers": [
