@@ -7,8 +7,7 @@ use LarrockUsers;
 use Illuminate\Database\Eloquent\Model;
 use Larrock\Core\Component;
 use Larrock\Core\Traits\GetLink;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Larrock\Core\Traits\GetFilesAndImages;
 
@@ -21,15 +20,12 @@ use Larrock\Core\Traits\GetFilesAndImages;
  * @property int $active
  * @property int $rating
  */
-class Reviews extends Model implements HasMediaConversions
+class Reviews extends Model implements HasMedia
 {
     /** @var $this Component */
     protected $config;
 
-    use SearchableTrait;
-    use GetFilesAndImages;
-    use HasMediaTrait;
-    use GetLink;
+    use SearchableTrait, GetFilesAndImages, GetLink;
 
     protected $searchable = [
         'columns' => [
