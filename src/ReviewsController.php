@@ -2,13 +2,13 @@
 
 namespace Larrock\ComponentReviews;
 
-use App\Http\Controllers\Controller;
 use Auth;
-use LarrockReviews;
+use Mail;
 use Session;
 use Validator;
+use LarrockReviews;
 use Illuminate\Http\Request;
-use Mail;
+use App\Http\Controllers\Controller;
 
 class ReviewsController extends Controller
 {
@@ -20,9 +20,10 @@ class ReviewsController extends Controller
     public function index()
     {
         $data['list'] = LarrockReviews::getModel()->wherePublicInFeed(1)->whereActive(1)->orderBy('date', 'DESC')->paginate(10);
-        if(Auth::user()){
+        if (Auth::user()) {
             $data['moderate'] = LarrockReviews::getModel()->wherePublicInFeed(1)->whereUserId(Auth::user()->id)->whereActive(0)->orderBy('date', 'DESC')->get();
         }
+
         return view(config('larrock.views.reviews.index', 'larrock::front.reviews.list'), $data);
     }
 
@@ -34,27 +35,27 @@ class ReviewsController extends Controller
             'rating' => 'required',
             'comment' => 'required',
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return back()->withInput($request->except('password'))->withErrors($validator);
         }
 
         $comment = LarrockReviews::getModel()->fill($request->all());
         $comment->date = date('Y-m-d H:s:i');
         $comment->active = 0;
-        if($comment->save()){
+        if ($comment->save()) {
             Session::push('message.success', 'Ваш отзыв успешно отправлен, после модерации от будет опубликован');
 
             $mails = array_map('trim', explode(',', env('MAIL_TO_ADMIN')));
             $send_data = $request->all();
-            /** @noinspection PhpVoidFunctionResultUsedInspection */
+            /* @noinspection PhpVoidFunctionResultUsedInspection */
             Mail::send('larrock::emails.review', $send_data,
-                function($message) use ($mails){
-                    $message->from('no-reply@'. array_get($_SERVER, 'HTTP_HOST'), env('MAIL_TO_ADMIN_NAME', 'ROBOT'));
+                function ($message) use ($mails) {
+                    $message->from('no-reply@'.array_get($_SERVER, 'HTTP_HOST'), env('MAIL_TO_ADMIN_NAME', 'ROBOT'));
                     $message->to($mails);
-                    $message->subject('Отправлен отзыв '. env('SITE_NAME')
+                    $message->subject('Отправлен отзыв '.env('SITE_NAME')
                     );
                 });
-        }else{
+        } else {
             Session::push('message.danger', 'Отзыв не удалось сохранить');
         }
 
