@@ -3,16 +3,16 @@
 namespace Larrock\ComponentReviews;
 
 use Cache;
-use Larrock\ComponentReviews\Models\Reviews;
-use Larrock\ComponentUsers\Models\User;
-use Larrock\Core\Component;
-use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
-use Larrock\Core\Helpers\FormBuilder\FormDate;
-use Larrock\Core\Helpers\FormBuilder\FormInput;
-use Larrock\Core\Helpers\FormBuilder\FormSelectKey;
-use Larrock\Core\Helpers\FormBuilder\FormTags;
-use Larrock\Core\Helpers\FormBuilder\FormTextarea;
 use LarrockReviews;
+use Larrock\Core\Component;
+use Larrock\ComponentUsers\Models\User;
+use Larrock\ComponentReviews\Models\Reviews;
+use Larrock\Core\Helpers\FormBuilder\FormDate;
+use Larrock\Core\Helpers\FormBuilder\FormTags;
+use Larrock\Core\Helpers\FormBuilder\FormInput;
+use Larrock\Core\Helpers\FormBuilder\FormCheckbox;
+use Larrock\Core\Helpers\FormBuilder\FormTextarea;
+use Larrock\Core\Helpers\FormBuilder\FormSelectKey;
 
 class ReviewsComponent extends Component
 {
@@ -46,7 +46,7 @@ class ReviewsComponent extends Component
 
         $row = new FormSelectKey('rating', 'Оценка');
         $this->setRow($row->setOptions(['5' => '★★★★★ Рекомендую', '4' => '★★★★ Хорошо',
-            '3' => '★★★ Удовлетворительно', '2' => '★★ Не рекомендую', '1' => '★ Ужасно'])
+            '3' => '★★★ Удовлетворительно', '2' => '★★ Не рекомендую', '1' => '★ Ужасно', ])
             ->setValid('required')->setInTableAdmin()->setFillable()
             ->setCssClassGroup('uk-width-1-2 uk-width-1-3@m'));
 
@@ -54,7 +54,7 @@ class ReviewsComponent extends Component
         $this->setRow($row->setDefaultValue(0)->setFillable()->setCssClassGroup('uk-width-1-2 uk-width-1-3@m'));
 
         $row = new FormDate('date', 'Дата комментария');
-        $this->setRow( $row->setFillable()->setCssClassGroup('uk-width-1-2 uk-width-1-3@m'));
+        $this->setRow($row->setFillable()->setCssClassGroup('uk-width-1-2 uk-width-1-3@m'));
 
         $row = new FormTags('user_id', 'ID посетителя на сайте');
         $this->setRow($row->setModels(Reviews::class, User::class)->setTitleRow('name')
@@ -81,18 +81,20 @@ class ReviewsComponent extends Component
 
     public function renderAdminMenu()
     {
-        $count = Cache::rememberForever('count-data-admin-'. LarrockReviews::getName(), function(){
+        $count = Cache::rememberForever('count-data-admin-'.LarrockReviews::getName(), function () {
             return LarrockReviews::getModel()->count(['id']);
         });
+
         return view('larrock::admin.sectionmenu.types.default', ['count' => $count, 'app' => LarrockReviews::getConfig(),
-            'url' => '/admin/'. LarrockReviews::getName()]);
+            'url' => '/admin/'.LarrockReviews::getName(), ]);
     }
 
     public function toDashboard()
     {
-        $data = Cache::rememberForever('LarrockReviewsItemsDashboard', function(){
+        $data = Cache::rememberForever('LarrockReviewsItemsDashboard', function () {
             return LarrockReviews::getModel()->latest('updated_at')->take(5)->get();
         });
+
         return view('larrock::admin.dashboard.reviews', ['component' => LarrockReviews::getConfig(), 'data' => $data]);
     }
 }

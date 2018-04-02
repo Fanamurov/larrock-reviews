@@ -2,8 +2,8 @@
 
 namespace Larrock\ComponentReviews;
 
-use Larrock\ComponentReviews\Requests\ReviewRequest;
 use Illuminate\Support\ServiceProvider;
+use Larrock\ComponentReviews\Requests\ReviewRequest;
 use Larrock\ComponentReviews\Middleware\ReviewsMiddleware;
 
 class LarrockComponentReviewsServiceProvider extends ServiceProvider
@@ -18,7 +18,7 @@ class LarrockComponentReviewsServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../views', 'larrock');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->publishes([
-            __DIR__.'/../views' => base_path('resources/views/vendor/larrock')
+            __DIR__.'/../views' => base_path('resources/views/vendor/larrock'),
         ]);
     }
 
@@ -28,8 +28,9 @@ class LarrockComponentReviewsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('larrockreviews', function() {
+        $this->app->singleton('larrockreviews', function () {
             $class = config('larrock.components.reviews', ReviewsComponent::class);
+
             return new $class;
         });
         $this->app->make(ReviewRequest::class);

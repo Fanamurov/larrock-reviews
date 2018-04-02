@@ -13,5 +13,4 @@ class LarrockReviews extends Facade
     {
         return 'larrockreviews';
     }
-
 }

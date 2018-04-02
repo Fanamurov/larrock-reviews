@@ -21,6 +21,7 @@ class ReviewsMiddleware
             return LarrockReviews::getModel()->whereActive(1)->latest('created_at')->take(config('larrock.reviews.module.take', 10))->get();
         });
         \View::share('reviews', $reviews);
+
         return $next($request);
     }
 }
