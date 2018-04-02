@@ -33,49 +33,48 @@ class ReviewsComponent extends Component
     protected function addRows()
     {
         $row = new FormInput('name', 'Имя комментатора');
-        $this->rows['name'] = $row->setValid('max:255|required')->setInTableAdmin()->setFillable();
+        $this->setRow($row->setValid('max:255|required')->setInTableAdmin()->setFillable());
 
         $row = new FormInput('city', 'Город комментатора');
-        $this->rows['city'] = $row->setValid('max:255')->setFillable();
+        $this->setRow($row->setValid('max:255')->setFillable());
 
         $row = new FormInput('contact', 'Контакты');
-        $this->rows['contact'] = $row->setValid('max:255')->setFillable();
+        $this->setRow($row->setValid('max:255')->setFillable());
 
         $row = new FormTextarea('comment', 'Комментарий');
-        $this->rows['comment'] = $row->setTypo()->setValid('required')->setInTableAdmin()->setFillable();
+        $this->setRow($row->setTypo()->setValid('required')->setInTableAdmin()->setFillable());
 
         $row = new FormSelectKey('rating', 'Оценка');
-        $this->rows['rating'] = $row->setOptions(['5' => '★★★★★ Рекомендую', '4' => '★★★★ Хорошо',
+        $this->setRow($row->setOptions(['5' => '★★★★★ Рекомендую', '4' => '★★★★ Хорошо',
             '3' => '★★★ Удовлетворительно', '2' => '★★ Не рекомендую', '1' => '★ Ужасно'])
             ->setValid('required')->setInTableAdmin()->setFillable()
-            ->setCssClassGroup('uk-width-1-2 uk-width-1-3@m');
+            ->setCssClassGroup('uk-width-1-2 uk-width-1-3@m'));
 
         $row = new FormCheckbox('public_in_feed', 'Опубликован на странице Отзывы');
-        $this->rows['public_in_feed'] = $row->setDefaultValue(0)->setFillable()
-            ->setCssClassGroup('uk-width-1-2 uk-width-1-3@m');
+        $this->setRow($row->setDefaultValue(0)->setFillable()->setCssClassGroup('uk-width-1-2 uk-width-1-3@m'));
 
         $row = new FormDate('date', 'Дата комментария');
-        $this->rows['date'] = $row->setFillable()->setCssClassGroup('uk-width-1-2 uk-width-1-3@m');
+        $this->setRow( $row->setFillable()->setCssClassGroup('uk-width-1-2 uk-width-1-3@m'));
 
         $row = new FormTags('user_id', 'ID посетителя на сайте');
-        $this->rows['user_id'] = $row->setModels(Reviews::class, User::class)->setTitleRow('name')
-            ->setMaxItems(1)->setFillable()->setCssClassGroup('uk-width-1-2 uk-width-1-3@m');
+        $this->setRow($row->setModels(Reviews::class, User::class)->setTitleRow('name')
+            ->setMaxItems(1)->setFillable()->setCssClassGroup('uk-width-1-2 uk-width-1-3@m'));
 
         $row = new FormTags('answer_author', 'Кто отвечает');
-        $this->rows['answer_author'] = $row->setModels(Reviews::class, User::class)
-            ->setMaxItems(1)->setFillable()->setTitleRow('name');
+        $this->setRow($row->setModels(Reviews::class, User::class)
+            ->setMaxItems(1)->setFillable()->setTitleRow('name'));
 
         $row = new FormTextarea('answer', 'Ответ');
-        $this->rows['answer'] = $row->setTypo()->setInTableAdmin()->setFillable();
+        $this->setRow($row->setTypo()->setInTableAdmin()->setFillable());
 
         $row = new FormInput('link_name', 'link_name');
-        $this->rows['link_name'] = $row->setCssClassGroup('uk-width-1-2 uk-width-1-3@m')->setFillable();
+        $this->setRow($row->setCssClassGroup('uk-width-1-2 uk-width-1-3@m')->setFillable());
 
         $row = new FormInput('link_id', 'link_id');
-        $this->rows['link_id'] = $row->setCssClassGroup('uk-width-1-2 uk-width-1-3@m')->setFillable();
+        $this->setRow($row->setCssClassGroup('uk-width-1-2 uk-width-1-3@m')->setFillable());
 
         $row = new FormInput('url_post', 'url_post');
-        $this->rows['url_post'] = $row->setCssClassGroup('uk-width-1-2 uk-width-1-3@m')->setFillable();
+        $this->setRow($row->setCssClassGroup('uk-width-1-2 uk-width-1-3@m')->setFillable());
 
         return $this;
     }
