@@ -33,7 +33,7 @@ class ReviewsComponent extends Component
     protected function addRows()
     {
         $row = new FormInput('name', 'Имя комментатора');
-        $this->setRow($row->setValid('max:255|required')->setInTableAdmin()->setFillable());
+        $this->setRow($row->setValid('max:255|required')->setInTableAdmin()->setFillable()->setMobileAdminVisible());
 
         $row = new FormInput('city', 'Город комментатора');
         $this->setRow($row->setValid('max:255')->setFillable());
