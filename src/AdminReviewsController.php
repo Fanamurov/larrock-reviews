@@ -41,6 +41,8 @@ class AdminReviewsController extends Controller
             'contact' => 'без контакта',
             'public_in_feed' => 1,
             'user_id' => \Auth::user()->id,
+            'comment' => 'Отзыв',
+            'rating' => 5,
         ]);
 
         return $this->store($test);
